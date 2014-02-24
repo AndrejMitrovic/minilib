@@ -1,0 +1,20 @@
+{
+    "name": "minilib",
+    "description": "minilib is a D2 utility library containing some commonly missing functionality from Phobos.",
+    "targetName": "minilib",
+    "authors": [
+        "Andrej Mitrovic",
+    ],
+    "license": "BSL-1.0",
+    "version": "~master",
+    "homepage": "https://github.com/AndrejMitrovic/minilib",
+    "copyright": "Copyright (c) Andrej Mitrovic 2013 - 2014.",
+    "targetType": "staticLibrary",
+    "sourcePaths": [
+        "src",
+    ],
+    "importPaths": [
+        "lib",
+    ],
+    "targetPath" : "bin"
+}
