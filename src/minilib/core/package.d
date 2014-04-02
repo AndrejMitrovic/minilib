@@ -17,6 +17,7 @@ public
     import minilib.core.functional;
     import minilib.core.io;
     import minilib.core.math;
+    import minilib.core.meta;
     import minilib.core.path;
     import minilib.core.platform;
     import minilib.core.print;
