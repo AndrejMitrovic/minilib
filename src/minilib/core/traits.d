@@ -739,44 +739,6 @@ unittest
 }
 
 /**
-    Return the element type of Type.
-
-    Note: This is different from ElementType in
-    std.range which returns the type of the .front property.
-*/
-template ElementTypeOf(Type)
-{
-    static if(is(Type T : T[N], size_t N))
-    {
-        alias ElementTypeOf = T;
-    }
-    else
-    static if(is(Type T : T[]))
-    {
-        alias ElementTypeOf = T;
-    }
-    else
-    static if(is(Type T : T*))
-    {
-        alias ElementTypeOf = T;
-    }
-    else
-    {
-        alias ElementTypeOf = Type;
-    }
-}
-
-///
-unittest
-{
-    static assert(is(ElementTypeOf!int == int));
-    static assert(is(ElementTypeOf!(int[]) == int));
-    static assert(is(ElementTypeOf!(int[][]) == int[]));
-    static assert(is(ElementTypeOf!(int[1][2]) == int[1]));
-    static assert(is(ElementTypeOf!(int**) == int*));
-}
-
-/**
     Return the base element type of Type.
 
     Note: This is different from ElementType in
@@ -803,6 +765,9 @@ template BaseElementType(Type)
         alias BaseElementType = Type;
     }
 }
+
+/// ditto
+alias ElementTypeOf = BaseElementType;
 
 ///
 unittest
@@ -888,6 +853,31 @@ unittest
     static assert(ElementCount!(int[2][2]) == 4);
     static assert(ElementCount!(int[][2][2]) == 4);
 }
+
+/**
+    Return the dimension count of a static or dynamic array.
+    Dimensions are counted up to the first non-array element type.
+*/
+enum DimensionCount(T : E[], E) = DimCountImpl!E + 1;
+
+///
+unittest
+{
+    static assert(!__traits(compiles, DimensionCount!int));
+    static assert(DimensionCount!(int[]) == 1);
+    static assert(DimensionCount!(int[][]) == 2);
+    static assert(DimensionCount!(int[1][ ]) == 2);
+    static assert(DimensionCount!(int[ ][1]) == 2);
+    static assert(DimensionCount!(int[1][1]) == 2);
+    static assert(DimensionCount!(int[][]*[]) == 1);
+}
+
+private enum DimCountImpl(T : E[], E) = DimCountImpl!E + 1;
+
+static if (__VERSION__ > 2065)
+    private enum DimCountImpl(T) = 0;
+else
+    template DimCountImpl(T) if (!is(T : E[], E)) { enum DimCountImpl = 0; }
 
 /** Return a unidimensional representation of a static array. */
 template Flatten(T)
@@ -1398,6 +1388,7 @@ template EnumBaseType(E) if (is(E == enum))
         alias EnumBaseType = B;
 }
 
+///
 unittest
 {
     enum EI : int { x = 0 }

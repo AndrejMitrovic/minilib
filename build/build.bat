@@ -25,4 +25,4 @@ rem (both Optlink and Unilink will ICE)
 set dtest=rdmd --main -debug -unittest --force
 
 rem %dtest% --compiler=%compiler% %flags% -Isrc minilib\package.d & echo Success: minilib tested.
-echo %compiler% -debug -g -w -of%binPath%\minilib.lib -lib %flags% %files% && echo Success: minilib built.
+%compiler% -debug -g -w -of%binPath%\minilib.lib -lib %flags% %files% && echo Success: minilib built.

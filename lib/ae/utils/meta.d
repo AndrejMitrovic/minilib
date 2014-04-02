@@ -453,17 +453,17 @@ unittest
 		alias t = Dummy.T!i;
 	}
 
-	{
-		S s;
-		auto w = ScopeProxy!(S.t)(&s);
-		w.set(42);
-		assert(s.i == 42);
-	}
+	//~ {
+		//~ S s;
+		//~ auto w = ScopeProxy!(S.t)(&s);
+		//~ w.set(42);
+		//~ assert(s.i == 42);
+	//~ }
 
-	{
-		S s;
-		auto w = SubProxy!(S, "t.")(&s);
-		w.set(42);
-		assert(s.i == 42);
-	}
+	//~ {
+		//~ S s;
+		//~ auto w = SubProxy!(S, "t.")(&s);
+		//~ w.set(42);
+		//~ assert(s.i == 42);
+	//~ }
 }
