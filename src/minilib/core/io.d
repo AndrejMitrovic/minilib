@@ -59,8 +59,8 @@ version (Posix)
 {
     private
     {
-        import std.c.stdio;
-        import std.c.linux.termios;
+        import core.stdc.stdio;
+        import core.sys.posix.termios;
     }
 
     extern(C) void cfmakeraw(termios* termios_p);
